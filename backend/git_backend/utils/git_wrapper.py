@@ -30,7 +30,7 @@ def parse_commit(raw_commit):
     }
 
 
-def get_commits_by_branch(branch_name, max_count=50):
+def get_commits_by_branch(branch_name, max_count=5000):
     commits = repo.iter_commits(branch_name, max_count=max_count)
 
     return list(map(parse_commit, commits))

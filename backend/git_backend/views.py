@@ -22,9 +22,20 @@ class BranchesList(viewsets.ViewSet):
         try:
             return Response(git_wrapper.get_commits_by_branch(pk))
         except Exception as e:
-            raise Http404("Branch does not exist")
+            error = sys.exc_info()
+            print('e', error)
+            if('fatal: bad revision' in str(error)):
+                raise Http404()
+            else:
+                raise e
 
 
 class CommitDetail(viewsets.ViewSet):
     def retrieve(self, request, pk):
-        return Response(git_wrapper.get_commit_by_sha(pk))
+        try:
+            return Response(git_wrapper.get_commit_by_sha(pk))
+        except Exception as e:
+            error = sys.exc_info()
+            if('BadName' in str(error)):
+                raise Http404()
+            raise e
