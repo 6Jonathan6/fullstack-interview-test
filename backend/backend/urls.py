@@ -19,8 +19,7 @@ from rest_framework import routers
 from git_backend import views
 
 router = routers.DefaultRouter()
-router.register(r'branches/<str:pk>/', views.BranchesList,
-                basename="branch_detail")
+
 router.register(r'branches', views.BranchesList, basename="branch_list")
 
 urlpatterns = [
