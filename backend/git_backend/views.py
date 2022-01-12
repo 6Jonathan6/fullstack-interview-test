@@ -14,3 +14,6 @@ class BranchesList(viewsets.ViewSet):
 
     def list(self, request):
         return Response(git_wrapper.get_branches())
+
+    def retrieve(self, request, pk):
+        return Response(git_wrapper.get_commits_by_branch(pk))
