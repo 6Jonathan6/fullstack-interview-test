@@ -31,6 +31,10 @@ class BranchesList(viewsets.ViewSet):
 
 
 class CommitDetail(viewsets.ViewSet):
+    """
+        Shows files and author data of a commit
+    """
+
     def retrieve(self, request, pk):
         try:
             return Response(git_wrapper.get_commit_by_sha(pk))
