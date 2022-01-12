@@ -21,6 +21,7 @@ from git_backend import views
 router = routers.DefaultRouter()
 
 router.register(r'branches', views.BranchesList, basename="branch_list")
+router.register(r'commit', views.CommitDetail, basename="commit-detail")
 
 urlpatterns = [
     path('', include(router.urls)),
