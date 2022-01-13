@@ -29,7 +29,7 @@ def has_commit_message(message):
 def is_pr_editable(current_status):
     if(current_status == 'CL' or current_status == 'MR'):
         raise serializers.ValidationError(
-            'Closed and Merged pull request are not editables')
+            'Closed and Merged pull requests are not editables')
 
 
 class PullRequestSerializerUpdate(serializers.ModelSerializer):
