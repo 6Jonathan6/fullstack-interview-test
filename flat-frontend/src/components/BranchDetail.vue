@@ -11,7 +11,7 @@
 </script>
 <template>
   <div class="flex flex-grow flex-col items-center">
-    <h1 class="font-bold text-xl">{{ route.params.id }}</h1>
+    <h1 class="font-bold text-xl">Detalle de: {{ route.params.id }}</h1>
     <ul v-if="branchData.length > 0">
       <li class="mt-4" v-for="commit in branchData" :key="commit.id">
         <div class="flex justify-center">
@@ -32,6 +32,10 @@
             >
               Ver detalle
             </RouterLink>
+            <p class="text-xs text-gray-600 font-bold mt-2 text-right">
+              {{ new Date(commit.datetime).toLocaleDateString("es-MX") }}:
+              {{ new Date(commit.datetime).toLocaleTimeString("es-MX") }}
+            </p>
           </div>
         </div>
       </li>
