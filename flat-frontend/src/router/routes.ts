@@ -12,7 +12,7 @@ const routes = [
   {
     name: "commit-detail",
     path: "/commit/:id",
-    component: () => import("@/components/BranchDetail.vue"),
+    component: () => import("@/components/CommitDetail.vue"),
   },
 ];
 export default routes;

@@ -33,7 +33,7 @@
               Ver detalle
             </RouterLink>
             <p class="text-xs text-gray-600 font-bold mt-2 text-right">
-              {{ new Date(commit.datetime).toLocaleDateString("es-MX") }}:
+              {{ new Date(commit.datetime).toLocaleDateString("es-MX") }}
               {{ new Date(commit.datetime).toLocaleTimeString("es-MX") }}
             </p>
           </div>

@@ -12,6 +12,12 @@ export function getBranches(): AxiosPromise<string[]> {
   });
 }
 
+interface Stats {
+  deletions: number;
+  file_name: string;
+  insertions: number;
+  lines: number;
+}
 export interface Commit {
   id: string;
   datetime: string;
@@ -21,6 +27,13 @@ export interface Commit {
     name: string;
     email: string;
   };
+  files_stats: Stats[];
+  total_stats: {
+    deletions: number;
+    files: number;
+    insertions: number;
+    lines: number;
+  };
 }
 export function getBranchDetail(branchName: string): AxiosPromise<Commit[]> {
   return api({
@@ -29,5 +42,11 @@ export function getBranchDetail(branchName: string): AxiosPromise<Commit[]> {
       pk: branchName,
     },
     method: "get",
+  });
+}
+
+export function getCommitDetail(sha: string): AxiosPromise<Commit> {
+  return api({
+    url: `/commit/${sha}/`,
   });
 }
