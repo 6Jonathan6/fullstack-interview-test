@@ -15,8 +15,8 @@ def open_pr_exists(pr_base_branch_name, pr_compare_branch_name):
     result = PullRequestModel.objects.filter(
         base_branch_name=pr_base_branch_name, compare_branch_name=pr_compare_branch_name, status='OP')
     if(result.count() > 0):
-        raise serializers.ValidationError(
-            'An open pull request for these branches {compare_name} ---> {base_name} already exists'.format(base_name=pr_base_branch_name, compare_name=pr_compare_branch_name))
+        raise serializers.ValidationError('An open pull request for these branches {compare_name} ---> {base_name} already exists'.format(
+            base_name=pr_base_branch_name, compare_name=pr_compare_branch_name))
 
 
 def has_commit_message(message):
@@ -36,7 +36,8 @@ class PullRequestSerializer(serializers.ModelSerializer):
         if(validated_data.get('status') == 'MR'):
             has_commit_message(validated_data.get("merge_commit_message"))
             merge_branches(validated_data.get('base_branch_name'),
-                           validated_data.get('compare_branch_name'))
+                           validated_data.get('compare_branch_name'),
+                           validated_data.get("merge_commit_message"))
         return PullRequestModel.objects.create(**validated_data)
 
     class Meta:
