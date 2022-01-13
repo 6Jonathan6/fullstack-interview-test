@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import PullRequest
+from .models import PullRequestModel
 # Register your models here.
-admin.site.register(PullRequest)
+admin.site.register(PullRequestModel)

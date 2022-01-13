@@ -1,9 +1,9 @@
 from django.http import Http404
-from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework import status
 from .utils import git_wrapper
+from .serializers import PullRequestSerializer
+from .models import PullRequestModel
 from django.http import Http404
 import sys
 
@@ -43,3 +43,8 @@ class CommitDetail(viewsets.ViewSet):
             if('BadName' in str(error)):
                 raise Http404()
             raise e
+
+
+class PullRequest(viewsets.ModelViewSet):
+    queryset = PullRequestModel.objects.all()
+    serializer_class = PullRequestSerializer

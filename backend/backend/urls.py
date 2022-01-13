@@ -20,10 +20,10 @@ from git_backend import views
 
 router = routers.DefaultRouter()
 
-router.register(r'branches', views.BranchesList, basename="branch_list")
+router.register(r'branches', views.BranchesList, basename="branch-list")
 router.register(r'commit', views.CommitDetail, basename="commit-detail")
-
+router.register(r'pull-request', views.PullRequest, basename="pull-request")
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
