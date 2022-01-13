@@ -50,7 +50,5 @@ def merge_branches(base_branch_name, compare_branch_name, merge_message):
         print('finallysdsd', merge_message)
         compare_branch = get_branch_by_name(compare_branch_name)
         repo.git.checkout(base_branch_name)
-        repo.git.merge(compare_branch, message=merge_message)
-    finally:
-        print('finally', prev_branch)
+        repo.git.merge(compare_branch, m=merge_message)
         repo.git.checkout(prev_branch)
