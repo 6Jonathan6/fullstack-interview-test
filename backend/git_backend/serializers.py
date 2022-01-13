@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import PullRequestModel
-from .utils.git_wrapper import get_branches
+from .utils.git_wrapper import get_branches, merge_branches
 
 
 def validate_branch_name(branch_name):
@@ -11,12 +11,12 @@ def validate_branch_name(branch_name):
         raise serializers.ValidationError('Branch does not exist')
 
 
-def pr_exists(pr_base_branch_name, pr_compare_branch_name):
+def open_pr_exists(pr_base_branch_name, pr_compare_branch_name):
     result = PullRequestModel.objects.filter(
-        base_branch_name=pr_base_branch_name, compare_branch_name=pr_compare_branch_name)
+        base_branch_name=pr_base_branch_name, compare_branch_name=pr_compare_branch_name, status='OP')
     if(result.count() > 0):
         raise serializers.ValidationError(
-            'A pull request for these branches {compare_name} ---> {base_name} already exists'.format(base_name=pr_base_branch_name, compare_name=pr_compare_branch_name))
+            'An open pull request for these branches {compare_name} ---> {base_name} already exists'.format(base_name=pr_base_branch_name, compare_name=pr_compare_branch_name))
 
 
 class PullRequestSerializer(serializers.ModelSerializer):
@@ -25,8 +25,11 @@ class PullRequestSerializer(serializers.ModelSerializer):
         validators=[validate_branch_name])
 
     def create(self, validated_data):
-        pr_exists(validated_data.get('base_branch_name'),
-                  validated_data.get('compare_branch_name'))
+        open_pr_exists(validated_data.get('base_branch_name'),
+                       validated_data.get('compare_branch_name'))
+        if(validated_data.get('status') == 'MR'):
+            merge_branches(validated_data.get('base_branch_name'),
+                           validated_data.get('compare_branch_name'))
         return PullRequestModel.objects.create(**validated_data)
 
     class Meta:
