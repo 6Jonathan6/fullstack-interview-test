@@ -36,8 +36,6 @@ class PullRequestSerializerUpdate(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         is_pr_editable(instance.status)
-        print('UPDATE INSTANCE', instance.status,
-              'UPDATE VALIDATED DATA', validated_data.get('status'))
         return super().update(instance, validated_data)
 
     class Meta:
