@@ -45,6 +45,9 @@ class PullRequestSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
     class Meta:
         model = PullRequestModel
         fields = [
@@ -55,5 +58,6 @@ class PullRequestSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "merge_commit_message"
+            "pr_title"
         ]
         read_only_fields = ['base_branch_name', "compare_branch_name"]
