@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import PullRequestModel
 from .utils.git_wrapper import get_branches, merge_branches
+from git import GitCommandError
 
 
 def validate_branch_name(branch_name):
@@ -31,14 +32,17 @@ class PullRequestSerializer(serializers.ModelSerializer):
         validators=[validate_branch_name])
 
     def create(self, validated_data):
-        open_pr_exists(validated_data.get('base_branch_name'),
-                       validated_data.get('compare_branch_name'))
-        if(validated_data.get('status') == 'MR'):
-            has_commit_message(validated_data.get("merge_commit_message"))
-            merge_branches(validated_data.get('base_branch_name'),
-                           validated_data.get('compare_branch_name'),
-                           validated_data.get("merge_commit_message"))
-        return PullRequestModel.objects.create(**validated_data)
+        try:
+            open_pr_exists(validated_data.get('base_branch_name'),
+                           validated_data.get('compare_branch_name'))
+            if(validated_data.get('status') == 'MR'):
+                has_commit_message(validated_data.get("merge_commit_message"))
+                merge_branches(validated_data.get('base_branch_name'),
+                               validated_data.get('compare_branch_name'),
+                               validated_data.get("merge_commit_message"))
+            return PullRequestModel.objects.create(**validated_data)
+        except GitCommandError as e:
+            raise serializers.ValidationError(e)
 
     class Meta:
         model = PullRequestModel
