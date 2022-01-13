@@ -2,7 +2,7 @@ from django.http import Http404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .utils import git_wrapper
-from .serializers import PullRequestSerializer
+from .serializers import PullRequestSerializerCreate, PullRequestSerializerUpdate
 from .models import PullRequestModel
 from django.http import Http404
 import sys
@@ -46,5 +46,12 @@ class CommitDetail(viewsets.ViewSet):
 
 
 class PullRequest(viewsets.ModelViewSet):
+    serializer_class = PullRequestSerializerCreate
     queryset = PullRequestModel.objects.all()
-    serializer_class = PullRequestSerializer
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+
+        if self.request.method == 'PUT' or self.request.method == 'PATCH':
+            serializer_class = PullRequestSerializerUpdate
+        return serializer_class

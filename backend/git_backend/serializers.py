@@ -26,11 +26,40 @@ def has_commit_message(message):
             'Commit message cannot be empty in a MERGED pull request')
 
 
-class PullRequestSerializer(serializers.ModelSerializer):
+def is_pr_editable(current_status):
+    if(current_status == 'CL' or current_status == 'MR'):
+        raise serializers.ValidationError(
+            'Closed and Merged pull request are not editables')
+
+
+class PullRequestSerializerUpdate(serializers.ModelSerializer):
+
+    def update(self, instance, validated_data):
+        is_pr_editable(instance.status)
+        print('UPDATE INSTANCE', instance.status,
+              'UPDATE VALIDATED DATA', validated_data.get('status'))
+        return super().update(instance, validated_data)
+
+    class Meta:
+        model = PullRequestModel
+        fields = [
+            "id",
+            "status",
+            "base_branch_name",
+            "compare_branch_name",
+            "created_at",
+            "updated_at",
+            "merge_commit_message",
+            "pr_title"
+        ]
+        read_only_fields = ['base_branch_name', "compare_branch_name"]
+
+
+class PullRequestSerializerCreate(serializers.ModelSerializer):
     base_branch_name = serializers.CharField(
-        validators=[validate_branch_name], read_only=True)
+        validators=[validate_branch_name])
     compare_branch_name = serializers.CharField(
-        validators=[validate_branch_name], read_only=True)
+        validators=[validate_branch_name])
 
     def create(self, validated_data):
         try:
@@ -45,11 +74,6 @@ class PullRequestSerializer(serializers.ModelSerializer):
         except GitCommandError:
             raise serializers.ValidationError(
                 'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
-
-    def update(self, instance, validated_data, pk=None):
-        print('UPDATE INSTANCE', instance.status,
-              'UPDATE VALIDATED DATA', validated_data.get('status'))
-        return super().update(instance, validated_data)
 
     class Meta:
         model = PullRequestModel
