@@ -1,4 +1,4 @@
-from git import Repo
+from git import Repo, GitCommandError
 
 repo = Repo('.', search_parent_directories=True)
 
