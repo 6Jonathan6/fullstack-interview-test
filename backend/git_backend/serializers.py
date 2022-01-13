@@ -35,8 +35,16 @@ def is_pr_editable(current_status):
 class PullRequestSerializerUpdate(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
-        is_pr_editable(instance.status)
-        return super().update(instance, validated_data)
+        try:
+            is_pr_editable(instance.status)
+            if(validated_data.get('status') == 'MR'):
+                merge_branches(validated_data.get('base_branch_name'),
+                               validated_data.get('compare_branch_name'),
+                               validated_data.get("merge_commit_message"))
+            return super().update(instance, validated_data)
+        except GitCommandError:
+            raise serializers.ValidationError(
+                'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
 
     class Meta:
         model = PullRequestModel
