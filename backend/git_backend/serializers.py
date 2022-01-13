@@ -27,9 +27,10 @@ def has_commit_message(message):
 
 
 class PullRequestSerializer(serializers.ModelSerializer):
-    base_branch_name = serializers.CharField(validators=[validate_branch_name])
+    base_branch_name = serializers.CharField(
+        validators=[validate_branch_name], read_only=True)
     compare_branch_name = serializers.CharField(
-        validators=[validate_branch_name])
+        validators=[validate_branch_name], read_only=True)
 
     def create(self, validated_data):
         try:
@@ -45,7 +46,9 @@ class PullRequestSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
 
-    def update(self, instance, validated_data):
+    def update(self, instance, validated_data, pk=None):
+        print('UPDATE INSTANCE', instance.status,
+              'UPDATE VALIDATED DATA', validated_data.get('status'))
         return super().update(instance, validated_data)
 
     class Meta:

@@ -15,8 +15,8 @@ class PullRequestModel(models.Model):
         choices=PullRequestStatus.choices,
         default=PullRequestStatus.STATUS_OPEN
     )
-    base_branch_name = models.CharField(max_length=200)
-    compare_branch_name = models.CharField(max_length=200)
+    base_branch_name = models.CharField(max_length=200, )
+    compare_branch_name = models.CharField(max_length=200, )
     pr_title = models.CharField(max_length=200)
     merge_commit_message = models.CharField(
         max_length=500, blank=True, default='')

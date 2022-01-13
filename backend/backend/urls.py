@@ -23,6 +23,8 @@ router = routers.DefaultRouter()
 router.register(r'branches', views.BranchesList, basename="branch-list")
 router.register(r'commit', views.CommitDetail, basename="commit-detail")
 router.register(r'pull-request', views.PullRequest, basename="pull-request")
+router.register(r'pull-request/<int:pk>$', views.PullRequest,
+                basename="pull-request-edit")
 urlpatterns = [
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
