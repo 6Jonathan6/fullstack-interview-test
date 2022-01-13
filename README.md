@@ -10,5 +10,5 @@
     3. Inicia el servidor de desarrollo
     
         python ./backend/manage.py migrate
-        python ./backend/manage.py runserver 
+        python ./backend/manage.py runserver
     
