@@ -19,6 +19,12 @@ def open_pr_exists(pr_base_branch_name, pr_compare_branch_name):
             'An open pull request for these branches {compare_name} ---> {base_name} already exists'.format(base_name=pr_base_branch_name, compare_name=pr_compare_branch_name))
 
 
+def has_commit_message(message):
+    if(len(message) == 0):
+        raise serializers.ValidationError(
+            'Commit message cannot be empty in a MERGED pull request')
+
+
 class PullRequestSerializer(serializers.ModelSerializer):
     base_branch_name = serializers.CharField(validators=[validate_branch_name])
     compare_branch_name = serializers.CharField(
@@ -28,6 +34,7 @@ class PullRequestSerializer(serializers.ModelSerializer):
         open_pr_exists(validated_data.get('base_branch_name'),
                        validated_data.get('compare_branch_name'))
         if(validated_data.get('status') == 'MR'):
+            has_commit_message(validated_data.get("merge_commit_message"))
             merge_branches(validated_data.get('base_branch_name'),
                            validated_data.get('compare_branch_name'))
         return PullRequestModel.objects.create(**validated_data)
@@ -35,5 +42,5 @@ class PullRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = PullRequestModel
         fields = ["id", "status", "base_branch_name",
-                  "compare_branch_name", "created_at", "updated_at"]
+                  "compare_branch_name", "created_at", "updated_at", "merge_commit_message"]
         read_only_fields = ['base_branch_name', "compare_branch_name"]
