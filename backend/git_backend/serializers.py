@@ -38,13 +38,13 @@ class PullRequestSerializerUpdate(serializers.ModelSerializer):
         try:
             is_pr_editable(instance.status)
             if(validated_data.get('status') == 'MR'):
-                merge_branches(validated_data.get('base_branch_name'),
-                               validated_data.get('compare_branch_name'),
-                               validated_data.get("merge_commit_message"))
+                merge_branches(validated_data.get('base_branch_name', instance.base_branch_name),
+                               validated_data.get(
+                                   'compare_branch_name', instance.compare_branch_name),
+                               validated_data.get("merge_commit_message", instance.merge_commit_message))
             return super().update(instance, validated_data)
-        except GitCommandError:
-            raise serializers.ValidationError(
-                'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
+        except GitCommandError as e:
+            raise serializers.ValidationError(e)
 
     class Meta:
         model = PullRequestModel
@@ -77,9 +77,8 @@ class PullRequestSerializerCreate(serializers.ModelSerializer):
                                validated_data.get('compare_branch_name'),
                                validated_data.get("merge_commit_message"))
             return PullRequestModel.objects.create(**validated_data)
-        except GitCommandError:
-            raise serializers.ValidationError(
-                'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
+        except GitCommandError as e:
+            raise serializers.ValidationError(e)
 
     class Meta:
         model = PullRequestModel
