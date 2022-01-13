@@ -47,6 +47,13 @@ class PullRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PullRequestModel
-        fields = ["id", "status", "base_branch_name",
-                  "compare_branch_name", "created_at", "updated_at", "merge_commit_message"]
+        fields = [
+            "id",
+            "status",
+            "base_branch_name",
+            "compare_branch_name",
+            "created_at",
+            "updated_at",
+            "merge_commit_message"
+        ]
         read_only_fields = ['base_branch_name', "compare_branch_name"]
