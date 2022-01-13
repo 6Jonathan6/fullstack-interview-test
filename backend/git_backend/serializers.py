@@ -41,8 +41,9 @@ class PullRequestSerializer(serializers.ModelSerializer):
                                validated_data.get('compare_branch_name'),
                                validated_data.get("merge_commit_message"))
             return PullRequestModel.objects.create(**validated_data)
-        except GitCommandError as e:
-            raise serializers.ValidationError(e)
+        except GitCommandError:
+            raise serializers.ValidationError(
+                'Something went wrogn. Check if your branches does not have conflict or your compare branch has unstaged changes')
 
     class Meta:
         model = PullRequestModel
