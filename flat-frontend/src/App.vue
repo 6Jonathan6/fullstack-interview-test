@@ -29,7 +29,7 @@
       </li>
       <li>
         <RouterLink
-          to="/new-pull-request"
+          to="/pull-request-create"
           class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
         >
           Crear PR</RouterLink

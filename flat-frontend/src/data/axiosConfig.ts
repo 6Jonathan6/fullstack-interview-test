@@ -84,6 +84,23 @@ export function getPullRequests(): AxiosPromise<PullRequest[]> {
   });
 }
 
+interface CreatePrPayload {
+  status: FormDataEntryValue | string;
+  base_branch_name: FormDataEntryValue | string;
+  compare_branch_name: FormDataEntryValue | string;
+  merge_commit_message: FormDataEntryValue | string;
+  pr_title: FormDataEntryValue | string;
+  author: FormDataEntryValue | string;
+}
+
+export function createPullRequest(data: CreatePrPayload) {
+  return api({
+    url: "/pull-request/",
+    method: "POST",
+    data,
+  });
+}
+
 export function updatePullRequest(
   id: number,
   status: PR_STATUSES_UNION
