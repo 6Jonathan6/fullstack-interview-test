@@ -37,8 +37,18 @@
       loading.value = true;
       const response = await updatePullRequest(id, status);
       emit("updated", response.data);
-    } catch (error) {
-      emit("error", error);
+    } catch (error: any) {
+      if (error.isAxiosError) {
+        const isReponseArray = Array.isArray(error.response.data);
+        emit(
+          "error",
+          isReponseArray
+            ? `Code: ${error.response.status} ${error.response.data[0]}`
+            : error.message
+        );
+      } else {
+        emit("error", error.message);
+      }
     } finally {
       loading.value = false;
     }
@@ -69,7 +79,7 @@
         <p class="text-gray-700 text-base mb-4">
           Merge
           <span class="font-bold"> {{ props.compare_branch_name }}</span> into
-          <span class="font-bold">{{ props.compare_branch_name }} </span>
+          <span class="font-bold">{{ props.base_branch_name }} </span>
         </p>
         <div class="flex flex-col">
           <ul class="mt-4">
