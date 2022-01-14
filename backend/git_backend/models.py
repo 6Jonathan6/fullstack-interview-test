@@ -18,6 +18,7 @@ class PullRequestModel(models.Model):
     base_branch_name = models.CharField(max_length=200)
     compare_branch_name = models.CharField(max_length=200)
     pr_title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
     merge_commit_message = models.CharField(
         max_length=500, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)

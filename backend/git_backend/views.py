@@ -16,10 +16,15 @@ class BranchesList(viewsets.ViewSet):
     """
 
     def list(self, request):
+        pk = request.GET.get('pk')
+        if(pk):
+            return self.retrieve(request, pk)
         return Response(git_wrapper.get_branches())
 
     def retrieve(self, request, pk):
         try:
+            print('skopfajsdfjadio', pk)
+            print(request)
             return Response(git_wrapper.get_commits_by_branch(pk))
         except Exception as e:
             error = sys.exc_info()
