@@ -37,8 +37,18 @@
       loading.value = true;
       const response = await updatePullRequest(id, status);
       emit("updated", response.data);
-    } catch (error) {
-      emit("error", error);
+    } catch (error: any) {
+      if (error.isAxiosError) {
+        const isReponseArray = Array.isArray(error.response.data);
+        emit(
+          "error",
+          isReponseArray
+            ? `Code: ${error.response.status} ${error.response.data[0]}`
+            : error.message
+        );
+      } else {
+        emit("error", error.message);
+      }
     } finally {
       loading.value = false;
     }

@@ -2,7 +2,11 @@
   import { ref, onMounted, Ref } from "vue";
   import { getPullRequests, PullRequest } from "@/data/axiosConfig";
   import PullRequestCardVue from "@/components/PullRequestCard.vue";
+  import ErrorModal from "@/components/ErrorModal.vue";
+
   const pullRequests: Ref<PullRequest[]> = ref([]);
+  const errorMessage: Ref<string> = ref("");
+
   onMounted(async function () {
     const response = await getPullRequests();
     pullRequests.value = response.data.reverse();
@@ -14,6 +18,9 @@
       }
       return pr;
     });
+  }
+  function onError(error: string) {
+    errorMessage.value = error;
   }
 </script>
 <template>
@@ -33,7 +40,13 @@
         :updated_at="pr.updated_at"
         :key="pr.id"
         @updated="onUpdated"
+        @error="onError"
       />
     </ul>
   </div>
+  <ErrorModal
+    v-if="errorMessage"
+    :messege="errorMessage"
+    @close="errorMessage = ''"
+  />
 </template>
