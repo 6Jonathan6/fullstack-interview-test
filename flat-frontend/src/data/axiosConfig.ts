@@ -51,4 +51,48 @@ export function getCommitDetail(sha: string): AxiosPromise<Commit> {
   });
 }
 
-export function getPullRequests(): AxiosPromise<PullRequest> {}
+export const PULL_REQUEST_STATUS_OPEN = "OP";
+export const PULL_REQUEST_STATUS_CLOSED = "CL";
+export const PULL_REQUEST_STATUS_MERGED = "MR";
+export const PULL_REQUEST_STATUSES = [
+  PULL_REQUEST_STATUS_OPEN,
+  PULL_REQUEST_STATUS_CLOSED,
+  PULL_REQUEST_STATUS_MERGED,
+] as const;
+
+export const PR_STATUS_LABELS = {
+  [PULL_REQUEST_STATUS_OPEN]: "OPEN",
+  [PULL_REQUEST_STATUS_CLOSED]: "CLOSED",
+  [PULL_REQUEST_STATUS_MERGED]: "MERGED",
+};
+export type PR_STATUSES_UNION = typeof PULL_REQUEST_STATUSES[number];
+export interface PullRequest {
+  id: number;
+  status: PR_STATUSES_UNION;
+  base_branch_name: string;
+  compare_branch_name: string;
+  created_at: string;
+  updated_at: string;
+  merge_commit_message: string;
+  pr_title: string;
+  author: string;
+}
+
+export function getPullRequests(): AxiosPromise<PullRequest[]> {
+  return api({
+    url: "/pull-request/",
+  });
+}
+
+export function updatePullRequest(
+  id: number,
+  status: PR_STATUSES_UNION
+): AxiosPromise<PullRequest> {
+  return api({
+    url: `/pull-request/${id}/`,
+    method: "patch",
+    data: {
+      status,
+    },
+  });
+}

@@ -21,15 +21,15 @@
       </li>
       <li>
         <RouterLink
-          to="/pull-requests"
-          class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
+          to="/pull-request"
+          class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-500"
         >
           Pull Request</RouterLink
         >
       </li>
       <li>
         <RouterLink
-          to="/new-pull-requests"
+          to="/new-pull-request"
           class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
         >
           Crear PR</RouterLink

@@ -7,7 +7,6 @@
   onMounted(async function () {
     const result = await getBranches();
     branches.value = result.data;
-    console.log(branches.value);
   });
 </script>
 

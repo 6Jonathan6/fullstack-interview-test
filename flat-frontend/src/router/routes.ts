@@ -16,7 +16,7 @@ const routes = [
   },
   {
     name: "pull-request-list",
-    path: "/pull-request/",
+    path: "/pull-request",
     component: () => import("@/components/PullRequestList.vue"),
   },
 ];
