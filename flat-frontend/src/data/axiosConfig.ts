@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosPromise } from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL as string,
+  baseURL: "http://127.0.0.1:8000/api",
 });
 
 export function getBranches(): AxiosPromise<string[]> {
