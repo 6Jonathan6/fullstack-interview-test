@@ -5,11 +5,15 @@
 </script>
 
 <template>
-  <nav class="sticky top-0 flex w-full justify-center items-center">
-    <ul class="flex gap-4 justify-center rounded bg-gray-100 p-4 shadow-xl">
+  <nav
+    class="lg:fixed lg:mt-4 lg:mr-4 lg:right-0 lg:w-auto lg:ml-4 sticky top-0 w-full :justify-center items-center"
+  >
+    <ul
+      class="flex gap-4 justify-center lg:flex-col rounded bg-gray-100 p-4 shadow-xl"
+    >
       <li>
         <RouterLink
-          class="text-sm text-blue-900 underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-blue-500"
+          class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
           to="/"
         >
           Home</RouterLink
@@ -18,7 +22,7 @@
       <li>
         <RouterLink
           to="/pull-requests"
-          class="text-sm text-blue-900 underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-blue-500"
+          class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
         >
           Pull Request</RouterLink
         >
@@ -26,7 +30,7 @@
       <li>
         <RouterLink
           to="/new-pull-requests"
-          class="text-sm text-blue-900 underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-blue-500"
+          class="text-sm text-white font-semibold bg-black underline decoration-transparent hover:decoration-inherit transition duration-300 ease-in-out active:text-gray-800"
         >
           Crear PR</RouterLink
         >

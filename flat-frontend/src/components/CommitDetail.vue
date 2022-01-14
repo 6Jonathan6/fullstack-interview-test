@@ -55,7 +55,7 @@
     </ul>
     <ul
       v-if="commitData.files_stats.length > 0"
-      class="mt-8 w-full px-4 overflow-hidden"
+      class="mt-8 w-full px-4 pb-8 overflow-hidden"
     >
       <li
         class="mt-4 w-full"
