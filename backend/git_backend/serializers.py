@@ -56,7 +56,7 @@ class PullRequestSerializerUpdate(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "merge_commit_message",
-            "pr_title"
+            "pr_title",
             "author"
         ]
         read_only_fields = ['base_branch_name',
@@ -92,7 +92,7 @@ class PullRequestSerializerCreate(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "merge_commit_message",
-            "pr_title"
+            "pr_title",
             "author"
         ]
         read_only_fields = ['base_branch_name', "compare_branch_name"]
