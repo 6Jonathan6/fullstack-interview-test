@@ -14,5 +14,10 @@ const routes = [
     path: "/commit/:id",
     component: () => import("@/components/CommitDetail.vue"),
   },
+  {
+    name: "pull-request-list",
+    path: "/pull-request/",
+    component: () => import("@/components/PullRequestList.vue"),
+  },
 ];
 export default routes;

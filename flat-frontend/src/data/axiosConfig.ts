@@ -50,3 +50,5 @@ export function getCommitDetail(sha: string): AxiosPromise<Commit> {
     url: `/commit/${sha}/`,
   });
 }
+
+export function getPullRequests(): AxiosPromise<PullRequest> {}

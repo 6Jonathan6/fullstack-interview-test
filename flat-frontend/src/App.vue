@@ -9,7 +9,7 @@
     class="lg:fixed lg:mt-4 lg:mr-4 lg:right-0 lg:w-auto lg:ml-4 sticky top-0 w-full :justify-center items-center"
   >
     <ul
-      class="flex gap-4 justify-center lg:flex-col rounded bg-gray-100 p-4 shadow-xl"
+      class="flex gap-4 justify-center lg:flex-col rounded bg-black p-4 shadow-xl"
     >
       <li>
         <RouterLink
