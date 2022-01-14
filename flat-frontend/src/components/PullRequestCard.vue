@@ -79,7 +79,7 @@
         <p class="text-gray-700 text-base mb-4">
           Merge
           <span class="font-bold"> {{ props.compare_branch_name }}</span> into
-          <span class="font-bold">{{ props.compare_branch_name }} </span>
+          <span class="font-bold">{{ props.base_branch_name }} </span>
         </p>
         <div class="flex flex-col">
           <ul class="mt-4">
